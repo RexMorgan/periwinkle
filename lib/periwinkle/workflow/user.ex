@@ -4,7 +4,7 @@ defmodule Periwinkle.Workflow.User do
 
   schema "user" do
     field :username, :string
-    field :password, Comeonin.Ecto.Password
+    field :password, :string
     timestamps
   end
 
@@ -19,8 +19,7 @@ defmodule Periwinkle.Workflow.User do
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
-        put_change(changeset, :password,
-          Comeonin.Bcrypt.hashpwsalt(pass))
+        put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(pass))
       _ -> changeset
     end
   end
