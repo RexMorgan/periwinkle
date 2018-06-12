@@ -52,7 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 config :periwinkle, Periwinkle.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "sa",
   database: "periwinkle_dev",
   hostname: "localhost",
   pool_size: 10
