@@ -2,10 +2,17 @@ defmodule Periwinkle.Workflow.User do
   @moduledoc false
   use Periwinkle.Schema
 
+  import Ecto.Changeset
+
   schema "user" do
     field :username, :string
     field :password, :string
     timestamps
+  end
+
+  def changeset(struct, params \\ %{}) do
+    struct
+      |> cast(params, [:username, :password])
   end
 
   def registration_changeset(model, params) do
