@@ -1,0 +1,9 @@
+var _user$project$Msgs$OnFetchCase = function (a) {
+	return {ctor: 'OnFetchCase', _0: a};
+};
+var _user$project$Msgs$OnLocationChange = function (a) {
+	return {ctor: 'OnLocationChange', _0: a};
+};
+var _user$project$Msgs$OnFetchCases = function (a) {
+	return {ctor: 'OnFetchCases', _0: a};
+};

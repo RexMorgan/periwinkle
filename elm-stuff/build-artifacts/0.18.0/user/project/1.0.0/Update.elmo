@@ -1,0 +1,31 @@
+var _user$project$Update$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'OnFetchCases':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{cases: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OnFetchCase':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{caseObj: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var newRoute = _user$project$Routing$parseLocation(_p0._0);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{route: newRoute}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});

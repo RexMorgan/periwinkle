@@ -1,0 +1,4 @@
+var _user$project$ApiPaths$apiCase = function (id) {
+	return A2(_elm_lang$core$Basics_ops['++'], '/api/case/', id);
+};
+var _user$project$ApiPaths$apiCaseList = '/api/caselist';
