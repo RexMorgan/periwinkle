@@ -27,3 +27,7 @@ npm-debug.log
 /config/*.secret.exs
 
 /.idea
+
+elm-stuff
+
+/assets/js/main.js
