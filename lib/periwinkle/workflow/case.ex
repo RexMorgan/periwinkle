@@ -7,6 +7,6 @@ defmodule Periwinkle.Workflow.Case do
     field :description, :string
     field :status, :string
     field :public, :boolean
-    timestamps
+    timestamps()
   end
 end

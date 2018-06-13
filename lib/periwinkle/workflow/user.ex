@@ -7,7 +7,7 @@ defmodule Periwinkle.Workflow.User do
   schema "user" do
     field :username, :string
     field :password, :string
-    timestamps
+    timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
