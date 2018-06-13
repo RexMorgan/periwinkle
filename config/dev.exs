@@ -53,6 +53,6 @@ config :periwinkle, Periwinkle.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "sa",
-  database: "periwinkle_dev",
+  database: "dovetailcrm",
   hostname: "localhost",
   pool_size: 10

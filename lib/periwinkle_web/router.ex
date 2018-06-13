@@ -19,6 +19,12 @@ defmodule PeriwinkleWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api", PeriwinkleWeb do
+    pipe_through :api
+
+    get "/cases", CaseController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", PeriwinkleWeb do
   #   pipe_through :api
