@@ -1,6 +1,9 @@
 defmodule Periwinkle.Workflow.Case do
   @moduledoc false
   use Periwinkle.Schema
+  
+  alias Periwinkle.Users.Employee
+
   import Ecto.Changeset
 
   schema "case" do
