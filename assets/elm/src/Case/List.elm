@@ -46,7 +46,7 @@ list cases =
                 [ tr []
                     [ th [] [ text "id" ]
                     , th [] [ text "title" ]
-                    , th [] [ text "description" ]
+                    , th [] [ text "status" ]
                     ]
                 ]
             , tbody [] (List.map caseRow cases)
@@ -58,7 +58,7 @@ caseRow caseItem =
     tr []
         [ td [] [ text caseItem.id ]
         , td [] [ text caseItem.title ]
-        , td [] [ text caseItem.description ]
+        , td [] [ text caseItem.status ]
         , td []
             [ viewBtn caseItem ]
         ]

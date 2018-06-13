@@ -10,7 +10,7 @@ type alias CaseId =
 type alias Case =
     {   id: CaseId
         , title: String
-        , description: String
+        , status: String
     }
 
 type alias Model =
@@ -34,12 +34,12 @@ decodeCase =
     decode Case
         |> required "id" Decode.string
         |> required "title" Decode.string
-        |> required "description" Decode.string
+        |> required "status" Decode.string
 
 
 decodeCases : Decode.Decoder (List Case)
 decodeCases =
-    Decode.list decodeCase
+    Decode.at ["cases"] (Decode.list decodeCase)
 
 type Route
     = CasesRoute
