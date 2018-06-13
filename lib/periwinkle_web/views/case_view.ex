@@ -7,6 +7,10 @@ defmodule PeriwinkleWeb.CaseView do
     %{cases: Enum.map(cases, &render_case/1)}
   end
 
+  def render("show.json", %{case: case}) do
+    render_case(case)
+  end
+
   defp render_case(%Case{} = case) do
     %{
       id: case.id,
