@@ -24,9 +24,9 @@ defmodule PeriwinkleWeb.Router do
 
   scope "/graphql" do
     pipe_through :graphql
-
-    forward("/", Absinthe.Plug, schema: PeriwinkleWeb.Schema)
+    
     forward("/graphiql", Absinthe.Plug.GraphiQL, schema: PeriwinkleWeb.Schema)
+    forward("/", Absinthe.Plug, schema: PeriwinkleWeb.Schema)
   end
 
   scope "/api", PeriwinkleWeb do
