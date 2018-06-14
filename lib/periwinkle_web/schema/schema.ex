@@ -14,5 +14,10 @@ defmodule PeriwinkleWeb.Schema do
       arg :id, non_null(:id)
       resolve(&Resolvers.Workflow.get_case/3)
     end
+
+    field :employee_search, type: list_of(:employee) do
+      arg :search, non_null(:string)
+      resolve(&Resolvers.Users.search_employee/3)
+    end
   end
 end

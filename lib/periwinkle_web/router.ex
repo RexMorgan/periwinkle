@@ -22,18 +22,18 @@ defmodule PeriwinkleWeb.Router do
     get "/cases", CaseController, :index
     get "/case/:id", CaseController, :show
   end
-  
-  scope "/", PeriwinkleWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/*path", PageController, :index
-  end
 
   scope "/graphql" do
     pipe_through :graphql
     
     forward("/graphiql", Absinthe.Plug.GraphiQL, schema: PeriwinkleWeb.Schema)
     forward("/", Absinthe.Plug, schema: PeriwinkleWeb.Schema)
+  end
+
+  scope "/", PeriwinkleWeb do
+    pipe_through :browser # Use the default browser stack
+
+    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.
