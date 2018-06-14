@@ -6,11 +6,54 @@ import Msgs exposing (Msg)
 import Case.Model
 import Case.List
 import RemoteData exposing (..)
+import Html.Attributes exposing (..)
+import Layout.Heading exposing (headingBar)
+
 
 view : Model -> Html Msg
 view model =
     div []
-        [ page model ]
+        [ headerArea
+          , pageArea model ]
+
+pageArea : Model -> Html Msg
+pageArea model =
+    div[class "container"]
+        [
+            contentArea model
+            , footerArea
+        ]
+
+
+contentArea : Model -> Html Msg
+contentArea model =
+    div[]
+        [
+            page model
+        ]
+
+
+headerArea : Html Msg
+headerArea =
+    div[]
+        [
+            headingBar
+        ]
+
+footerArea : Html Msg
+footerArea =
+    div[]
+        [
+
+        ]
+
+
+sidebarArea : Html Msg
+sidebarArea =
+    div[]
+        [
+
+        ]
 
 
 page : Model -> Html Msg
@@ -33,7 +76,7 @@ caseViewPage model caseId =
             text ""
 
         Loading ->
-            text "Loading ..."
+            text "Loading..."
 
         Success cases ->
             let
