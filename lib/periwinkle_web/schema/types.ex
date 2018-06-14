@@ -33,4 +33,15 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
   end
+
+  object :list_value do
+    field(:id, :id)
+    field(:list_name, :string)
+    field(:value, :string)
+    field(:order, :integer)
+    field(:active, :boolean)
+    field(:is_default, :boolean)
+    field(:integration_id, :string)
+    field(:parent_id, :id)
+  end
 end
