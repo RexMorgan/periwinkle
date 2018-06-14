@@ -63,15 +63,15 @@ page model =
             Case.List.view model.cases
 
         Models.CaseRoute id ->
-            caseViewPage model.cases id
+            caseViewPage model id
 
         Models.NotFoundRoute ->
             notFoundView
 
 
-caseViewPage : WebData (List Case) -> CaseId -> Html Msg
+caseViewPage : Model -> CaseId -> Html Msg
 caseViewPage model caseId =
-    case model of
+    case model.cases of
         NotAsked ->
             text ""
 
