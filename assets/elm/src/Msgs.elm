@@ -10,3 +10,4 @@ type Msg
     = OnFetchCases (WebData (List Case))
     | OnLocationChange Location
     | OnFetchCase (WebData Case)
+    | GetCase String

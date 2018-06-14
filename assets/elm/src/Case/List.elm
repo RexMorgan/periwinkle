@@ -8,11 +8,13 @@ import Msgs exposing (Msg)
 import Routing exposing (casePath)
 
 
+
 view : WebData (List Case) -> Html Msg
 view response =
     div []
-        [ nav
-        , maybeList response
+        [
+            nav
+            , maybeList response
         ]
 
 
@@ -41,12 +43,12 @@ maybeList response =
 list : List Case -> Html Msg
 list cases =
     div [ class "p2" ]
-        [ table []
+        [ table [class "table"]
             [ thead []
                 [ tr []
-                    [ th [] [ text "id" ]
-                    , th [] [ text "title" ]
+                    [ th [] [ text "title" ]
                     , th [] [ text "status" ]
+                    , th [] []
                     ]
                 ]
             , tbody [] (List.map caseRow cases)
@@ -56,8 +58,7 @@ list cases =
 caseRow : Case -> Html Msg
 caseRow caseItem =
     tr []
-        [ td [] [ text caseItem.id ]
-        , td [] [ text caseItem.title ]
+        [ td [] [ text caseItem.title ]
         , td [] [ text caseItem.status ]
         , td []
             [ viewBtn caseItem ]
