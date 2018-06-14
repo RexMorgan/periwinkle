@@ -25,9 +25,9 @@ parseLocation location =
 
 casesPath : String
 casesPath =
-    "/cases"
+    "#/cases"
 
 
 casePath : CaseId -> String
 casePath id =
-    "/case/" ++ id
+    "#/cases/" ++ id

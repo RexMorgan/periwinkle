@@ -4,6 +4,7 @@ import RemoteData exposing (WebData, RemoteData(..), asCmd, fromTask)
 import Http exposing (get, toTask)
 import Task exposing (Task, andThen, attempt, perform)
 import Html exposing (..)
+import Html.Attributes exposing(class)
 import String
 import Commands exposing (..)
 import Models exposing (..)
@@ -29,5 +30,20 @@ view model =
 viewCase : Case -> Html msg
 viewCase model =
     div[]
-        [text(toString model)]
+        [
+            div[class "columns"]
+                [
+                    span[class "column is-1"]
+                        [text "Title:"]
+                        , span[class "column"]
+                            [text model.title]
+                ]
+            , div[class "columns"]
+                [
+                    span[class "column is-1"]
+                        [text "Status:"]
+                        , span[class "column"]
+                            [text model.status]
+                ]
+        ]
 

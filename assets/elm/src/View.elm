@@ -8,7 +8,7 @@ import Case.List
 import RemoteData exposing (..)
 import Html.Attributes exposing (..)
 import Layout.Heading exposing (headingBar)
-
+import Commands exposing (..)
 
 view : Model -> Html Msg
 view model =
@@ -63,27 +63,25 @@ page model =
             Case.List.view model.cases
 
         Models.CaseRoute id ->
-            caseViewPage model id
+            getCase id
+            |>  caseViewPage
 
         Models.NotFoundRoute ->
             notFoundView
 
-
-caseViewPage : Model -> CaseId -> Html Msg
-caseViewPage model caseId =
-    case model.cases of
+caseViewPage : WebData Case -> Html Msg
+caseViewPage model =
+    case model of
         NotAsked ->
             text ""
 
         Loading ->
             text "Loading..."
 
-        Success cases ->
+        Success caseObj ->
             let
                 maybeCase =
-                    cases
-                        |> List.filter (\caseItem -> caseItem.id == caseId)
-                        |> List.head
+                    Maybe.map caseObj
             in
                 case maybeCase of
                     Just caseObj ->
