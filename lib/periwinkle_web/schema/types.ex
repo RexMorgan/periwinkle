@@ -2,6 +2,8 @@ defmodule PeriwinkleWeb.Schema.Types do
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Periwinkle.Repo
 
+  alias Periwinkle.Users.Employee
+
   import_types Absinthe.Type.Custom
 
   object :case do
@@ -29,6 +31,9 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:status, :string)
     field(:phone_number, :string)
     field(:email_address, :string)
+    field :avatar, :string do
+      resolve fn employee, _, _ -> {:ok, avatar_url(employee)} end
+    end
     field(:time_zone, :string)
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
@@ -43,5 +48,9 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:is_default, :boolean)
     field(:integration_id, :string)
     field(:parent_id, :id)
+  end
+
+  defp avatar_url(%Employee{id: id}) do
+    "https://api.adorable.io/avatars/285/" <> id <> ".png"
   end
 end

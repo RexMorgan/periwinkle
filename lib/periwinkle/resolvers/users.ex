@@ -8,6 +8,6 @@ defmodule Periwinkle.Resolvers.Users do
   def search_employee(_parent, %{search: search}, _resolution) do
     query = from e in Employee,
             where: ilike(e.full_name, ^"%#{search}%")
-     {:ok, Repo.all(query)}
+    {:ok, Repo.all(query)}
   end
 end
