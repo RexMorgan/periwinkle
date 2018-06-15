@@ -10,6 +10,7 @@ defmodule PeriwinkleWeb.Schema.Types do
 
   object :case do
     field(:id, :id)
+    field(:identifier, :string)
     field(:title, :string)
     field(:status, :string)
     field(:priority, :string)

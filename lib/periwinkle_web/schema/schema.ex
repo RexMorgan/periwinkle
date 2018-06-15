@@ -49,7 +49,7 @@ defmodule PeriwinkleWeb.Schema do
       # the :update_case mutation happens.
       # It also has a topic function used to find what subscriptions care about
       # this particular case
-      trigger :update_case, fn c ->
+      trigger :update_case, topic: fn c ->
         c.id
       end
     end
