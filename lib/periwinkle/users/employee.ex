@@ -8,7 +8,7 @@ defmodule Periwinkle.Users.Employee do
     field(:last_name, :string, source: :lastname)
     field(:full_name, :string, source: :fullname)
     field(:job_title, :string, source: :jobtitle)
-    field(:status, :string, default: "Active")
+    field(:status, :string)
     field(:phone_number, :string, source: :primaryphonenumber)
     field(:email_address, :string, source: :primaryemailaddress)
     field(:time_zone, :string, source: :timezone)

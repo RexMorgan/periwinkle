@@ -1,8 +1,0 @@
-var _user$project$ApiPaths$baseApiHost = 'http://localhost:4000';
-var _user$project$ApiPaths$apiCaseList = A2(_elm_lang$core$Basics_ops['++'], _user$project$ApiPaths$baseApiHost, '/api/cases');
-var _user$project$ApiPaths$apiCase = function (id) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_user$project$ApiPaths$baseApiHost,
-		A2(_elm_lang$core$Basics_ops['++'], '/api/case/', id));
-};

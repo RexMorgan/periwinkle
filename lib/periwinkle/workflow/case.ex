@@ -3,6 +3,7 @@ defmodule Periwinkle.Workflow.Case do
   use Periwinkle.Schema
   
   alias Periwinkle.Users.Employee
+  alias Periwinkle.Users.User
 
   import Ecto.Changeset
 
@@ -19,6 +20,7 @@ defmodule Periwinkle.Workflow.Case do
     field(:is_sensitive, :boolean, default: true, source: :issensitive)
 
     belongs_to(:employee, Employee)
+    belongs_to(:owner, User)
 
     timestamps(inserted_at: :created, updated_at: :lastmodified)
   end

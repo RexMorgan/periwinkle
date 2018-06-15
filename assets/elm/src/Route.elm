@@ -17,7 +17,7 @@ route : Parser (Route -> a) a
 route =
   oneOf
     [ Url.map Dashboard (s "")
-      , Url.map CaseView (s "case" </> Case.idParser)
+    , Url.map CaseView (s "case" </> Case.idParser)
     ]
 
 -- INTERNAL --
