@@ -2,6 +2,8 @@ defmodule Periwinkle.Workflow.Case do
   @moduledoc false
   use Periwinkle.Schema
 
+  alias Periwinkle.Labels.Label
+
   alias Periwinkle.Users.Employee
   alias Periwinkle.Users.User
 
@@ -25,6 +27,7 @@ defmodule Periwinkle.Workflow.Case do
     belongs_to(:owner, User)
 
     has_many(:activity_logs, ActivityLog, foreign_key: :workflowitem_id)
+    has_many(:labels, Label, foreign_key: :entityid)
 
     timestamps(inserted_at: :created, updated_at: :lastmodified)
   end
