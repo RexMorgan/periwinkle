@@ -34,4 +34,25 @@ defmodule PeriwinkleWeb.Schema do
       resolve &Resolvers.Workflow.update_case/3
     end
   end
+
+  subscription do
+    field :monitor_case, type: :case do
+      arg :id, non_null(:id)
+
+      # Configure the subscription, setting the topic fn based on the provided case Id arg
+      config fn args, _ ->
+        {:ok, topic: args.id}
+      end
+
+      # Auto-trigger on update_case mutation
+      # This tells Absinthe to run any subscriptions with this field every time
+      # the :update_case mutation happens.
+      # It also has a topic function used to find what subscriptions care about
+      # this particular case
+      trigger :update_case, fn c ->
+        c.id
+      end
+    end
+
+  end
 end

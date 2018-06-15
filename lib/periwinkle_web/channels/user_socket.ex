@@ -1,5 +1,7 @@
 defmodule PeriwinkleWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket,
+    schema: PeriwinkleWeb.Schema
 
   ## Channels
   # channel "room:*", PeriwinkleWeb.RoomChannel
@@ -20,6 +22,7 @@ defmodule PeriwinkleWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(_params, socket) do
+    # For subscription options, see https://hexdocs.pm/absinthe/subscriptions.html
     {:ok, socket}
   end
 

@@ -12,6 +12,8 @@ defmodule Periwinkle.Application do
       supervisor(Periwinkle.Repo, []),
       # Start the endpoint when the application starts
       supervisor(PeriwinkleWeb.Endpoint, []),
+      # Start the subscription supervisor
+      supervisor(Absinthe.Subscription, [PeriwinkleWeb.Endpoint]),
       # Start your own worker by calling: Periwinkle.Worker.start_link(arg1, arg2, arg3)
       # worker(Periwinkle.Worker, [arg1, arg2, arg3]),
     ]
