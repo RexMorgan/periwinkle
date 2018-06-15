@@ -17,6 +17,7 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:available_in_self_service, :boolean)
     field(:is_sensitive, :boolean)
     field(:employee, :employee, resolve: assoc(:employee))
+    field(:owner, :user, resolve: assoc(:owner))
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
   end
@@ -39,6 +40,24 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:lastmodified, :naive_datetime)
   end
 
+  object :user do
+    field(:id, :id)
+    field(:email_address, :string)
+    field(:first_name, :string)
+    field(:last_name, :string)
+    field(:phone_number, :string)
+    field(:status, :string)
+    field(:workgroup, :string)
+    field(:department, :string)
+    field(:time_zone, :string)
+    field(:created, :naive_datetime)
+    field(:lastmodified, :naive_datetime)
+
+    field :avatar, :string do
+      resolve fn user, _, _ -> {:ok, avatar_url(user)} end
+    end
+  end
+
   object :list_value do
     field(:id, :id)
     field(:list_name, :string)
@@ -50,7 +69,7 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:parent_id, :id)
   end
 
-  defp avatar_url(%Employee{id: id}) do
+  defp avatar_url(%{id: id}) do
     "https://api.adorable.io/avatars/285/" <> id <> ".png"
   end
 end
