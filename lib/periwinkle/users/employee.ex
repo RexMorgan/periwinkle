@@ -6,7 +6,6 @@ defmodule Periwinkle.Users.Employee do
     field(:title, :string)
     field(:first_name, :string, source: :firstname)
     field(:last_name, :string, source: :lastname)
-    field(:full_name, :string, source: :fullname)
     field(:job_title, :string, source: :jobtitle)
     field(:status, :string)
     field(:phone_number, :string, source: :primaryphonenumber)

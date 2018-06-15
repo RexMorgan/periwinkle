@@ -24,6 +24,11 @@ list =
                     id,
                     avatar,
                     fullName
+                },
+                owner {
+                    id,
+                    avatar,
+                    fullName
                 }
             }
         }

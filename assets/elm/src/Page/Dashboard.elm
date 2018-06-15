@@ -45,6 +45,8 @@ caseList cases =
                 [ tr []
                     [ th [] [ text "title" ]
                     , th [] [ text "status" ]
+                    , th [] [ text "Employee" ]
+                    , th [] [ text "Owner" ]
                     , th [] []
                     ]
                 ]
@@ -57,10 +59,29 @@ caseRow caseItem =
     tr []
         [ td [] [ text caseItem.title ]
         , td [] [ text caseItem.status ]
+        , td [] [ text (getEmployeeName caseItem) ]
+        , td [] [ text (getOwnerName caseItem) ]
         , td []
             [ viewBtn caseItem ]
         ]
 
+getEmployeeName : Case -> String
+getEmployeeName caseItem =
+    case caseItem.employee of
+        Nothing ->
+            ""
+        
+        Just employee ->
+            employee.fullName
+
+getOwnerName : Case -> String
+getOwnerName caseItem =
+    case caseItem.owner of
+        Nothing ->
+            ""
+        
+        Just user ->
+            user.fullName
 
 viewBtn : Case -> Html.Html msg
 viewBtn caseItem =

@@ -27,17 +27,21 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:title, :string)
     field(:first_name, :string)
     field(:last_name, :string)
-    field(:full_name, :string)
     field(:job_title, :string)
     field(:status, :string)
     field(:phone_number, :string)
     field(:email_address, :string)
-    field :avatar, :string do
-      resolve fn employee, _, _ -> {:ok, avatar_url(employee)} end
-    end
     field(:time_zone, :string)
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
+
+    field :full_name, :string do
+      resolve fn employee, _, _ -> {:ok, employee.first_name <> " " <> employee.last_name} end
+    end
+
+    field :avatar, :string do
+      resolve fn employee, _, _ -> {:ok, avatar_url(employee)} end
+    end
   end
 
   object :user do
@@ -52,6 +56,10 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:time_zone, :string)
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
+
+    field :full_name, :string do
+      resolve fn user, _, _ -> {:ok, user.first_name <> " " <> user.last_name} end
+    end
 
     field :avatar, :string do
       resolve fn user, _, _ -> {:ok, avatar_url(user)} end

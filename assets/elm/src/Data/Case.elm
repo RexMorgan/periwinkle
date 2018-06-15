@@ -8,6 +8,8 @@ module Data.Case
     , idParser
     , idToString )
 
+import Data.Employee as Employee exposing(Employee)
+import Data.User as User exposing(User)
 import Json.Decode as Decode exposing (Decoder, nullable, string, bool)
 import Json.Decode.Pipeline exposing (custom, decode, hardcoded, required, optional)
 import UrlParser
@@ -22,6 +24,8 @@ type alias Case =
   , origin : String
   , availableInSelfService : Bool
   , isSensitive : Bool
+  , employee : Maybe Employee
+  , owner : Maybe User
   }
 
 type CaseId
@@ -55,3 +59,5 @@ decoder =
     |> optional "origin" string ""
     |> optional "availableInSelfService" bool False
     |> optional "isSensitive" bool False
+    |> optional "employee" (Decode.map Just Employee.decoder) Nothing
+    |> optional "owner" (Decode.map Just User.decoder) Nothing
