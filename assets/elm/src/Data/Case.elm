@@ -4,10 +4,10 @@ module Data.Case
     , CaseId
     , decoder
     , listDecoder
+    , mutationDecoder
     , queryDecoder
     , idParser
-    , idToString
-    , Body)
+    , idToString)
 
 import Data.Employee as Employee exposing(Employee)
 import Data.User as User exposing(User)
@@ -29,12 +29,6 @@ type alias Case =
   , owner : Maybe User
   }
 
-type Body
-    = Body Markdown
-
-type alias Markdown =
-    String
-
 type CaseId
   = CaseId String
 
@@ -45,6 +39,10 @@ idParser =
 idToString : CaseId -> String
 idToString (CaseId caseId) =
   caseId
+
+mutationDecoder : String -> Decoder Case
+mutationDecoder mutationName =
+  Decode.at ["data", mutationName] decoder
 
 queryDecoder : Decoder (List Case)
 queryDecoder =

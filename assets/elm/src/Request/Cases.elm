@@ -1,10 +1,10 @@
-module Request.Cases exposing ( list, get )
+module Request.Cases exposing ( list, get, updateCase )
 
-import Data.Case as Case exposing (Case, idToString, Body)
+import Data.Case as Case exposing (Case, idToString, CaseId)
 import Http
 import HttpBuilder exposing (RequestBuilder, withBody, withExpect, withQueryParams)
-import Json.Decode as Decode
 import Json.Encode as Encode
+import String.Interpolate exposing (interpolate)
 import Request.Helpers exposing (apiUrl, graphUrl)
 import Util exposing ((=>))
 
@@ -48,6 +48,24 @@ list =
         |> buildGraphQuery
         |> HttpBuilder.toRequest
 
+updateCase : CaseId -> Case -> (Http.Request Case)
+updateCase id theCase =
+    [ ( "query"
+      , interpolate """
+        mutation {
+            updateCase(id:"{0}",title:"{1}") {
+                id
+            }
+        }
+        """
+        [ Case.idToString id
+        , theCase.title]
+        |> Encode.string
+      )
+    ]
+        |> buildGraphMutation "updateCase"
+        |> HttpBuilder.toRequest
+
 -- HELPERS --
 
 maybeVal : ( a, Maybe b ) -> Maybe ( a, b )
@@ -67,6 +85,19 @@ buildFromQueryParams url queryParams =
         |> HttpBuilder.get
         |> withExpect (Http.expectJson Case.listDecoder)
         |> withQueryParams queryParams
+
+buildGraphMutation : String -> List ( String, Encode.Value ) -> RequestBuilder Case
+buildGraphMutation mutationName query =
+    let
+        body =
+            query
+            |> Encode.object
+            |> Http.jsonBody
+    in
+        graphUrl
+            |> HttpBuilder.post
+            |> withExpect (Http.expectJson (Case.mutationDecoder mutationName))
+            |> withBody body
 
 buildGraphQuery : List (String, Encode.Value) -> RequestBuilder (List Case)
 buildGraphQuery query =
