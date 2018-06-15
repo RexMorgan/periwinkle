@@ -2,6 +2,8 @@ defmodule PeriwinkleWeb.Schema.Types do
   use Absinthe.Schema.Notation
   use Absinthe.Ecto, repo: Periwinkle.Repo
 
+  alias Periwinkle.Resolvers
+
   alias Periwinkle.Users.Employee
 
   import_types Absinthe.Type.Custom
@@ -16,10 +18,17 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:origin, :string)
     field(:available_in_self_service, :boolean)
     field(:is_sensitive, :boolean)
-    field(:employee, :employee, resolve: assoc(:employee))
-    field(:owner, :user, resolve: assoc(:owner))
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
+
+    field(:employee, :employee, resolve: assoc(:employee))
+    field(:owner, :user, resolve: assoc(:owner))
+
+    field(:activity_logs, list_of(:activity_log), resolve: assoc(:activity_logs))
+
+    field :labels, list_of(:string) do
+      resolve(&Resolvers.Labels.labels_for_case/3)
+    end
   end
 
   object :employee do
@@ -75,6 +84,17 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:is_default, :boolean)
     field(:integration_id, :string)
     field(:parent_id, :id)
+  end
+
+  object :activity_log do
+    field(:id, :id)
+    field(:type, :string)
+    field(:internal, :boolean)
+    field(:notes, :string)
+    field(:created, :naive_datetime)
+    field(:lastmodified, :naive_datetime)
+
+    field(:user, :user, resolve: assoc(:user))
   end
 
   defp avatar_url(%{id: id}) do
