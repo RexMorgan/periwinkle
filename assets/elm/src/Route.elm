@@ -1,6 +1,6 @@
 module Route exposing (Route(..), fromLocation, href, modifyUrl)
 
-import Data.Case as Case
+import Data.Case as Case exposing (..)
 import Html exposing (Attribute)
 import Html.Attributes as Attr
 import Navigation exposing (Location)
@@ -11,11 +11,13 @@ import UrlParser as Url exposing ((</>), Parser, oneOf, parseHash, s, string)
 type Route
   = Root
   | Dashboard
+  | CaseView Case.CaseId
 
 route : Parser (Route -> a) a
 route =
   oneOf
     [ Url.map Dashboard (s "")
+      , Url.map CaseView (s "case" </> Case.idParser)
     ]
 
 -- INTERNAL --
@@ -30,6 +32,9 @@ routeToString page =
 
         Dashboard ->
           []
+
+        CaseView caseId ->
+            [ "case", Case.idToString caseId ]
   in
   "#/" ++ String.join "/" pieces
 

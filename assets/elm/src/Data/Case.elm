@@ -16,6 +16,7 @@ import UrlParser
 type alias Case =
   { id : CaseId
   , title : String
+  , status : String
   }
 
 type CaseId
@@ -38,3 +39,4 @@ decoder =
   decode Case
     |> required "id" (Decode.map CaseId Decode.string)
     |> required "title" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
+    |> required "status" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))

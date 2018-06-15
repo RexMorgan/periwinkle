@@ -10,6 +10,7 @@ import Http
 import Task exposing (Task)
 import Util exposing ((=>), onClickStopPropagation)
 import Views.Page as Page
+import Route exposing (href, Route(..))
 
 -- MODEL --
 
@@ -34,15 +35,40 @@ init =
 view : Model -> Html msg
 view model =
     div [ class "dashboard" ]
-        (viewCases model.cases)
+        [caseList model.cases]
 
-viewCases : (List Case) -> List (Html msg)
-viewCases cases =
-  List.map toLi cases
+caseList : List Case -> Html msg
+caseList cases =
+    div [ class "p2" ]
+        [ table [class "table"]
+            [ thead []
+                [ tr []
+                    [ th [] [ text "title" ]
+                    , th [] [ text "status" ]
+                    , th [] []
+                    ]
+                ]
+            , tbody [] (List.map caseRow cases)
+            ]
+        ]
 
-toLi : Case -> Html msg
-toLi theCase =
-  li [] [ text theCase.title ]
+caseRow : Case -> Html msg
+caseRow caseItem =
+    tr []
+        [ td [] [ text caseItem.title ]
+        , td [] [ text caseItem.status ]
+        , td []
+            [ viewBtn caseItem ]
+        ]
+
+
+viewBtn : Case -> Html.Html msg
+viewBtn caseItem =
+    a[ class "btn regular"
+    , Route.href (Route.CaseView caseItem.id)
+    ]
+    [ i [ class "fa fa-pencil mr1" ] []
+      , text "View" ]
 
 type Msg
   = None
