@@ -1,5 +1,6 @@
 defmodule PeriwinkleWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :periwinkle
+  use Absinthe.Phoenix.Endpoint
 
   socket "/socket", PeriwinkleWeb.UserSocket
 
