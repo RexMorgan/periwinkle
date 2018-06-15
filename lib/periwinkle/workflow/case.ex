@@ -1,9 +1,11 @@
 defmodule Periwinkle.Workflow.Case do
   @moduledoc false
   use Periwinkle.Schema
-  
+
   alias Periwinkle.Users.Employee
   alias Periwinkle.Users.User
+
+  alias Periwinkle.Workflow.ActivityLog
 
   import Ecto.Changeset
 
@@ -21,6 +23,8 @@ defmodule Periwinkle.Workflow.Case do
 
     belongs_to(:employee, Employee)
     belongs_to(:owner, User)
+
+    has_many(:activity_logs, ActivityLog, foreign_key: :workflowitem_id)
 
     timestamps(inserted_at: :created, updated_at: :lastmodified)
   end
