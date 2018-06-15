@@ -5,19 +5,32 @@ import Http
 import HttpBuilder exposing (RequestBuilder, withBody, withExpect, withQueryParams)
 import Json.Decode as Decode
 import Json.Encode as Encode
-import Request.Helpers exposing (apiUrl)
+import Request.Helpers exposing (apiUrl, graphUrl)
 import Util exposing ((=>))
 
 
 -- LIST --
 
 list : Http.Request (List Case)
-list  =
-  []
-   |> List.filterMap maybeVal
-   |> buildFromQueryParams "/cases"
-   |> HttpBuilder.toRequest
-
+list =
+    [ ( "query"
+      , """
+        {
+            cases {
+                id,
+                title,
+                status,
+                employee {
+                    id,
+                    avatar,
+                    fullName
+                }
+            }
+        }
+        """
+        |> Encode.string)]
+        |> buildGraphQuery
+        |> HttpBuilder.toRequest
 
 -- HELPERS --
 
@@ -38,3 +51,16 @@ buildFromQueryParams url queryParams =
         |> HttpBuilder.get
         |> withExpect (Http.expectJson Case.listDecoder)
         |> withQueryParams queryParams
+
+buildGraphQuery : List (String, Encode.Value) -> RequestBuilder (List Case)
+buildGraphQuery query =
+    let
+        body =
+            query
+            |> Encode.object
+            |> Http.jsonBody
+    in
+    graphUrl
+        |> HttpBuilder.post
+        |> withExpect (Http.expectJson Case.queryDecoder)
+        |> withBody body

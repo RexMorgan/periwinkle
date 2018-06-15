@@ -4,19 +4,24 @@ module Data.Case
     , CaseId
     , decoder
     , listDecoder
+    , queryDecoder
     , idParser
     , idToString )
 
-import Html exposing (Attribute, Html)
-import Json.Decode as Decode exposing (Decoder)
-import Json.Decode.Extra
-import Json.Decode.Pipeline exposing (custom, decode, hardcoded, required)
+import Json.Decode as Decode exposing (Decoder, nullable, string, bool)
+import Json.Decode.Pipeline exposing (custom, decode, hardcoded, required, optional)
 import UrlParser
 
 type alias Case =
   { id : CaseId
   , title : String
   , status : String
+  , priority : String
+  , severity : String
+  , caseType : String
+  , origin : String
+  , availableInSelfService : Bool
+  , isSensitive : Bool
   }
 
 type CaseId
@@ -30,6 +35,10 @@ idToString : CaseId -> String
 idToString (CaseId caseId) =
   caseId
 
+queryDecoder : Decoder (List Case)
+queryDecoder =
+  Decode.at ["data"] listDecoder
+
 listDecoder : Decoder (List Case)
 listDecoder =
   Decode.at ["cases"] (Decode.list decoder)
@@ -37,6 +46,12 @@ listDecoder =
 decoder : Decoder Case
 decoder =
   decode Case
-    |> required "id" (Decode.map CaseId Decode.string)
-    |> required "title" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
-    |> required "status" (Decode.map (Maybe.withDefault "") (Decode.nullable Decode.string))
+    |> required "id" (Decode.map CaseId string)
+    |> optional "title" string ""
+    |> optional "status" string ""
+    |> optional "priority" string ""
+    |> optional "severity" string ""
+    |> optional "caseType" string ""
+    |> optional "origin" string ""
+    |> optional "availableInSelfService" bool False
+    |> optional "isSensitive" bool False
