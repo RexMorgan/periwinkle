@@ -5,7 +5,8 @@ module Data.Case
     , decoder
     , listDecoder
     , idParser
-    , idToString )
+    , idToString
+    , Body)
 
 import Html exposing (Attribute, Html)
 import Json.Decode as Decode exposing (Decoder)
@@ -18,6 +19,12 @@ type alias Case =
   , title : String
   , status : String
   }
+
+type Body
+    = Body Markdown
+
+type alias Markdown =
+    String
 
 type CaseId
   = CaseId String

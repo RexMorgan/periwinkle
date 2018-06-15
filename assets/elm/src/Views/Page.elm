@@ -3,6 +3,7 @@ module Views.Page exposing (ActivePage(..), bodyId, frame)
 {-| The frame around a typical page - that is, the header and footer.
 -}
 
+import Data.Case exposing (CaseId)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Lazy exposing (lazy2)
@@ -21,6 +22,7 @@ under Other.
 type ActivePage
     = Other
     | Dashboard
+    | ViewCase CaseId
 
 
 {-| Take a page's Html and frame it with a header and footer.
@@ -62,6 +64,9 @@ isActive page route =
     case ( page, route ) of
         ( Dashboard, Route.Dashboard ) ->
             True
+
+        ( ViewCase pageCaseId, Route.CaseView routeCaseId ) ->
+            pageCaseId == routeCaseId
 
         _ ->
             False
