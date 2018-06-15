@@ -14,70 +14,48 @@ import Route exposing (href, Route(..))
 
 -- MODEL --
 
-type alias Model =
-  { cases : List Case
-  }
+type alias Model
+    = Case
 
 
 init : Case.CaseId -> Task PageLoadError Model
 init id =
   let
-      loadCases =
-        Request.Cases.list
+      loadCase =
+        Request.Cases.get id
           |> Http.toTask
 
       handleLoadError _ =
-        pageLoadError Page.Dashboard "Shits broke."
+        pageLoadError (Page.ViewCase id) "Shits broke."
   in
-  Task.map Model loadCases
-    |> Task.mapError handleLoadError
+    loadCase
+      |> Task.mapError handleLoadError
 
 -- VIEW --
-view : Model -> Html msg
+view : Case -> Html msg
 view model =
-    div [ class "dashboard" ]
-        (viewCases model.cases)
+    div [ class "viewCase" ]
+        [viewCase model]
 
-viewCases : (List Case) -> List (Html msg)
-viewCases cases =
-  List.map toLi cases
-
-toLi : Case -> Html msg
-toLi theCase =
-  li [] [ text theCase.title ]
-
-list : List Case -> Html Msg
-list cases =
-    div [ class "p2" ]
-        [ table [class "table"]
-            [ thead []
-                [ tr []
-                    [ th [] [ text "title" ]
-                    , th [] [ text "status" ]
-                    , th [] []
-                    ]
+viewCase : Case -> Html msg
+viewCase model =
+    div[]
+        [
+            div[class "columns"]
+                [
+                    span[class "column is-1"]
+                        [text "Title:"]
+                        , span[class "column"]
+                            [text model.title]
                 ]
-            , tbody [] (List.map caseRow cases)
-            ]
+            , div[class "columns"]
+                [
+                    span[class "column is-1"]
+                        [text "Status:"]
+                        , span[class "column"]
+                            [text model.status]
+                ]
         ]
-
-caseRow : Case -> Html Msg
-caseRow caseItem =
-    tr []
-        [ td [] [ text caseItem.title ]
-        , td [] [ text caseItem.status ]
-        , td []
-            [ viewBtn caseItem ]
-        ]
-
-
-viewBtn : Case -> Html.Html Msg
-viewBtn caseItem =
-    a[ class "btn regular"
-    , Route.href (Route.CaseView caseItem.id)
-    ]
-    [ i [ class "fa fa-pencil mr1" ] []
-      , text "View" ]
 
 type Msg
   = None

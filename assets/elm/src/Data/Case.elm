@@ -6,7 +6,8 @@ module Data.Case
     , listDecoder
     , queryDecoder
     , idParser
-    , idToString )
+    , idToString
+    , Body)
 
 import Data.Employee as Employee exposing(Employee)
 import Data.User as User exposing(User)
@@ -27,6 +28,12 @@ type alias Case =
   , employee : Maybe Employee
   , owner : Maybe User
   }
+
+type Body
+    = Body Markdown
+
+type alias Markdown =
+    String
 
 type CaseId
   = CaseId String

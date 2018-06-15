@@ -17,6 +17,7 @@ type Page
   | Errored PageLoadError
   | NotFound
   | Dashboard Dashboard.Model
+  | ViewCase ViewCase.Model
 
 type PageState
   = Loaded Page
@@ -66,6 +67,12 @@ viewPage isLoading page =
         |> frame Page.Other
         |> Html.map DashboardMsg
 
+    ViewCase subModel ->
+      ViewCase.view subModel
+        |> frame Page.Other
+        |> Html.map CaseViewMsg
+
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.batch
@@ -87,6 +94,9 @@ pageSubscriptions page =
       Sub.none
 
     Dashboard _ ->
+      Sub.none
+
+    ViewCase _ ->
       Sub.none
 
     Errored _ ->
@@ -160,6 +170,12 @@ updatePage page msg model =
 
       ( DashboardLoaded (Err error), _ ) ->
         { model | pageState = Loaded (Errored error) } => Cmd.none
+
+      ( CaseViewLoaded (Ok subModel), _ ) ->
+        { model | pageState = Loaded (ViewCase subModel) } => Cmd.none
+
+      ( CaseViewLoaded (Err error), _ ) ->
+              { model | pageState = Loaded (Errored error) } => Cmd.none
 
       ( _, NotFound ) ->
         -- Disregard incoming messages when we're on the
