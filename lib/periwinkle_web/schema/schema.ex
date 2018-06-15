@@ -25,4 +25,13 @@ defmodule PeriwinkleWeb.Schema do
       resolve(&Resolvers.Lists.get_list_values/3)
     end
   end
+
+  mutation do
+    field :update_case, type: :case do
+      arg :id, non_null(:id)
+      arg :title, non_null(:string)
+
+      resolve &Resolvers.Workflow.update_case/3
+    end
+  end
 end

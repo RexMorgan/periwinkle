@@ -1,6 +1,7 @@
 defmodule Periwinkle.Resolvers.Workflow do
-  alias Periwinkle.Workflow.Case
+  import Ecto.{Changeset, Query}
 
+  alias Periwinkle.Workflow.Case
   alias Periwinkle.Repo
 
   def get_case(_parent, %{id: id}, _resolution) do
@@ -12,5 +13,15 @@ defmodule Periwinkle.Resolvers.Workflow do
 
   def get_cases(_parent, _args, _resolution) do
     {:ok, Repo.all(Case)}
+  end
+
+  def update_case(_parent, %{id: id, title: title}, _resolution) do
+    case Repo.get(Case, id) do
+      %Case{} = case ->
+        case
+        |> cast(%{title: title}, [:title])
+        |> Repo.update()
+      _ -> {:error, "Case ID #{id} not found"}
+    end
   end
 end
