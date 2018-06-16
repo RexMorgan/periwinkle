@@ -31,7 +31,14 @@ defmodule PeriwinkleWeb.Schema do
       arg :id, non_null(:id)
       arg :title, non_null(:string)
 
-      resolve &Resolvers.Workflow.update_case/3
+      resolve(&Resolvers.Workflow.update_case/3)
+    end
+
+    field :add_note, type: :activity_log do
+      arg :case_id, non_null(:id)
+      arg :notes, non_null(:string)
+
+      resolve(&Resolvers.Workflow.add_note/3)
     end
   end
 
@@ -52,7 +59,10 @@ defmodule PeriwinkleWeb.Schema do
       trigger :update_case, topic: fn c ->
         c.id
       end
-    end
 
+      trigger :add_note, topic: fn note ->
+        note.case.id
+      end
+    end
   end
 end

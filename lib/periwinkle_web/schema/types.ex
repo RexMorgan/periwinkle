@@ -95,6 +95,7 @@ defmodule PeriwinkleWeb.Schema.Types do
     field(:created, :naive_datetime)
     field(:lastmodified, :naive_datetime)
 
+    field(:case, :case, resolve: assoc(:case))
     field(:user, :user, resolve: assoc(:user))
   end
 
